@@ -100,6 +100,24 @@ Models are located in `./models/faster-whisper/<size>`. The system will use thes
 - **medium**: High accuracy
 - **large-v2**: Highest accuracy
 
+## Project Structure
+
+```
+├── .env                  # Environment variables configuration
+├── .env.example          # Example environment variables template
+├── .gitignore           # Git ignore rules
+├── app.py               # Web interface using Gradio
+├── main.py              # CLI application entry point
+├── README.md            # Project documentation
+└── models/              # Pre-downloaded model directory
+    └── faster-whisper/  # ASR models
+        ├── base/        # Base model files
+        ├── large-v2/    # Large v2 model files
+        ├── medium/      # Medium model files
+        ├── small/       # Small model files
+        └── tiny/        # Tiny model files
+```
+
 ## System Architecture
 
 - Speech recognition processes audio in real-time at 16kHz
@@ -111,9 +129,12 @@ Models are located in `./models/faster-whisper/<size>`. The system will use thes
 
 Contributions are welcome! Please feel free to submit a Pull Request.
 
-## License
 
-[Add your chosen license here]
+## License & Copyright
+
+This project was developed as an assignment for Word Works AI India Pvt Ltd. All rights are reserved by Word Works AI India Pvt Ltd. This code is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this code, via any medium, is strictly prohibited without express written permission from Word Works AI India Pvt Ltd.
+
+© 2025 Word Works AI India Pvt Ltd. All Rights Reserved.
 
 ## Acknowledgments
 
