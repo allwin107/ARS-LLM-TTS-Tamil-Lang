@@ -36,23 +36,60 @@ python -m venv .venv
 
 3. Install the required dependencies:
 ```bash
-pip install gradio av edge-tts google-generativeai python-dotenv numpy huggingface_hub
+pip install -r requirements.txt
 ```
 
-4. Models Setup:
+4. Models Setup
 
-The Faster-Whisper models can be obtained in two ways:
-- **Automatic Download**: The models will be downloaded automatically when you first run the application.
-- **Manual Download**: 
-  ```bash
-  # Download models.zip from: [Add your preferred hosting link here]
-  # Then extract it:
-  Expand-Archive -Path models.zip -DestinationPath . -Force  # For Windows PowerShell
-  # OR
-  unzip models.zip  # For Linux/Mac
+You can set up Faster-Whisper models in multiple ways. Pick the method that suits your environment :
+
+- Direct download (Google Drive):
+  - Download the prepared models folder from this Drive link: [Google Drive models folder](https://drive.google.com/drive/folders/1XXANV6cygKAgZ1gX8A1ANh7BorMOeSzy?usp=sharing)
+  - After download, place the `models` directory in the project root so that the structure looks like:
+    ```
+    ./models/faster-whisper/<size>/{config.json, model.bin, tokenizer.json, vocabulary.txt}
+    ```
+
+- CLI using huggingface_hub (no code changes):
+  - Use the `huggingface_hub` CLI to pre-download models into `./models/faster-whisper`:
+    ```bash
+    pip install huggingface_hub
+    # tiny, base, small, medium, large-v2 (download any you need)
+    huggingface-cli download Systran/faster-whisper-tiny --local-dir models/faster-whisper/tiny
+    huggingface-cli download Systran/faster-whisper-base --local-dir models/faster-whisper/base
+    huggingface-cli download Systran/faster-whisper-small --local-dir models/faster-whisper/small
+    huggingface-cli download Systran/faster-whisper-medium --local-dir models/faster-whisper/medium
+    huggingface-cli download Systran/faster-whisper-large-v2 --local-dir models/faster-whisper/large-v2
+    ```
+
+- Python one-liner (programmatic prefetch):
+  ```python
+  from huggingface_hub import snapshot_download
+  for size in ["tiny","base","small","medium","large-v2"]:
+      repo=f"Systran/faster-whisper-{size}"
+      snapshot_download(repo_id=repo, local_dir=f"models/faster-whisper/{size}")
   ```
 
-Note: Models are downloaded from the Hugging Face Hub. The first run might take some time depending on your internet connection and the model size chosen.
+- Configure a custom models directory (optional):
+  - Set environment variable before running:
+    - Windows PowerShell:
+      ```powershell
+      $env:WHISPER_LOCAL_DIR = (Resolve-Path "models/faster-whisper").Path
+      python app.py
+      ```
+    - Linux/Mac:
+      ```bash
+      export WHISPER_LOCAL_DIR="$(pwd)/models/faster-whisper"
+      python app.py
+      ```
+
+- Preload from the Web UI (Live tab):
+  - Use “Preload Selected” or “Preload All” to fetch models into `./models/faster-whisper` without starting recognition.
+
+Notes:
+- Model sizes: tiny < base < small < medium < large-v2 (speed vs. accuracy).
+- Disk space: each size can range from ~70MB (tiny) up to several GB (large-v2).
+- First download can be slow depending on your network and selected size.
 
 5. Set up environment variables:
 
