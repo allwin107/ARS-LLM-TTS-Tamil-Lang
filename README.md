@@ -55,9 +55,17 @@ The Faster-Whisper models can be obtained in two ways:
 Note: Models are downloaded from the Hugging Face Hub. The first run might take some time depending on your internet connection and the model size chosen.
 
 5. Set up environment variables:
-Create a `.env` file in the project root with the following variables:
+
+First, get your Google Gemini API key:
+1. Go to [Google AI Studio](https://makersuite.google.com/app/apikey)
+2. Sign in with your Google account
+3. Click on "Get API key"
+4. Create a new API key or select an existing one
+5. Copy your API key
+
+Then create a `.env` file in the project root with the following variables:
 ```env
-GOOGLE_API_KEY=your_gemini_api_key
+GOOGLE_API_KEY=your_gemini_api_key  # Paste your API key here
 TTS_VOICE=ta-IN-PallaviNeural
 GEMINI_MODEL=gemini-1.5-flash
 ```
