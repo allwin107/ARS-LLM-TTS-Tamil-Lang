@@ -24,8 +24,8 @@ A real-time conversational system that supports Tamil language processing throug
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/allwin107/ARS-LLM-TTS.git
-cd tamil-rt
+git clone https://github.com/allwin107/ARS-LLM-TTS-Tamil-Lang.git
+cd ARS-LLM-TTS-Tamil-Lang
 ```
 
 2. Create and activate a virtual environment:
