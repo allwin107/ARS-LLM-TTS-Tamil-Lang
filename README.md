@@ -11,6 +11,13 @@ A real-time conversational system that supports Tamil language processing throug
 - Support for Tamil language (with voice: ta-IN-PallaviNeural)
 - Both CLI and Gradio web interface options
 
+## System Architecture
+
+- Speech recognition processes audio in real-time at 16kHz
+- Voice Activity Detection uses 20ms frame size
+- Playback operates at 24kHz for optimal quality
+- System requirements depend on the chosen Whisper model size
+
 ## Prerequisites
 
 - Python 3.11 or higher
@@ -107,6 +114,24 @@ TTS_VOICE=ta-IN-PallaviNeural
 GEMINI_MODEL=gemini-1.5-flash
 ```
 
+## Project Structure
+
+```
+├── .env                  # Environment variables configuration
+├── .env.example          # Example environment variables template
+├── .gitignore           # Git ignore rules
+├── app.py               # Web interface using Gradio
+├── main.py              # CLI application entry point
+├── README.md            # Project documentation
+└── models/              # Pre-downloaded model directory
+    └── faster-whisper/  # ASR models
+        ├── base/        # Base model files
+        ├── large-v2/    # Large v2 model files
+        ├── medium/      # Medium model files
+        ├── small/       # Small model files
+        └── tiny/        # Tiny model files
+```
+
 ## Usage
 
 ### Command Line Interface
@@ -162,41 +187,13 @@ Models will be stored in `./models/faster-whisper/<size>`. After the initial dow
   - Increase search quality: raise beam size (e.g., 5–10) and enable VAD filtering for cleaner segments if latency is acceptable.
   - If available, run with GPU (CT2 float16) for faster, higher‑quality decoding; CPU int8 is slower and may underperform on difficult audio.
 
-## Project Structure
+## Notes
 
-```
-├── .env                  # Environment variables configuration
-├── .env.example          # Example environment variables template
-├── .gitignore           # Git ignore rules
-├── app.py               # Web interface using Gradio
-├── main.py              # CLI application entry point
-├── README.md            # Project documentation
-└── models/              # Pre-downloaded model directory
-    └── faster-whisper/  # ASR models
-        ├── base/        # Base model files
-        ├── large-v2/    # Large v2 model files
-        ├── medium/      # Medium model files
-        ├── small/       # Small model files
-        └── tiny/        # Tiny model files
-```
+- Models hosting: Due to a technical limitation when pushing large binaries to the repository (Git LFS and network constraints), I could not include the `models/` directory directly in this repo. As a workaround, the models are provided via Google Drive. Sorry for the inconvenience, and thank you for your understanding.
 
-## System Architecture
+- Performance caveat: Part of the observed lower accuracy and latency is influenced by the hardware used during development (CPU-only and modest system specs). Results should improve with stronger hardware (especially a CUDA-capable GPU) and the larger model sizes.
 
-- Speech recognition processes audio in real-time at 16kHz
-- Voice Activity Detection uses 20ms frame size
-- Playback operates at 24kHz for optimal quality
-- System requirements depend on the chosen Whisper model size
-
-## Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request.
-
-
-## License & Copyright
-
-This project was developed as an assignment for Word Works AI India Pvt Ltd. All rights are reserved by Word Works AI India Pvt Ltd. This code is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this code, via any medium, is strictly prohibited without express written permission from Word Works AI India Pvt Ltd.
-
-© 2025 Word Works AI India Pvt Ltd. All Rights Reserved.
+- UI focus: I prioritized building a reliable speech→LLM→TTS pipeline over UI polish. The web UI is intentionally simple; it can be redesigned and enhanced once the core pipeline is finalized.
 
 ## Acknowledgments
 
@@ -205,10 +202,12 @@ This project was developed as an assignment for Word Works AI India Pvt Ltd. All
 - Microsoft Edge TTS for high-quality speech synthesis
 - WebRTC VAD for voice activity detection
 
-## Notes and acknowledgments
+## Contributing
 
-- Models hosting: Due to a technical limitation when pushing large binaries to the repository (Git LFS and network constraints), I could not include the `models/` directory directly in this repo. As a workaround, the models are provided via Google Drive. Sorry for the inconvenience, and thank you for your understanding.
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-- Performance caveat: Part of the observed lower accuracy and latency is influenced by the hardware used during development (CPU-only and modest system specs). Results should improve with stronger hardware (especially a CUDA-capable GPU) and the larger model sizes.
+## License & Copyright
 
-- UI focus: I prioritized building a reliable speech→LLM→TTS pipeline over UI polish. The web UI is intentionally simple; it can be redesigned and enhanced once the core pipeline is finalized.
+This project was developed as an assignment for Word Works AI India Pvt Ltd. All rights are reserved by Word Works AI India Pvt Ltd. This code is proprietary and confidential. Unauthorized copying, modification, distribution, or use of this code, via any medium, is strictly prohibited without express written permission from Word Works AI India Pvt Ltd.
+
+© 2025 Word Works AI India Pvt Ltd. All Rights Reserved.
