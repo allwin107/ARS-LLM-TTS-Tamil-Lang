@@ -149,6 +149,19 @@ Models will be stored in `./models/faster-whisper/<size>`. After the initial dow
 - **medium**: High accuracy
 - **large-v2**: Highest accuracy
 
+#### Model performance and limitations
+- These models are not highly optimized for all Tamil accents/domains; expect lower accuracy, especially for noisy audio, code-mixed content, or domain-specific terms.
+- Smaller sizes (tiny/base/small) tend to miss words, hallucinate punctuation, or struggle with rapid speech. Use them only when speed or CPU constraints matter.
+- Medium/large-v2 provide noticeably better results but still may not match production-grade ASR. Quality depends on mic, environment, and speaking clarity.
+- Practical ways to improve results:
+  - Prefer larger models when possible: set `WHISPER_MODEL=large-v2` (or `medium`) for better accuracy.
+  - Use a discrete mic (USB/XLR) in a quiet, non‑echoey room; keep a fixed mouth distance and avoid clipping (peaks under 0 dB).
+  - Preprocess audio: apply light noise suppression (e.g., RNNoise/WebRTC NS), a gentle high‑pass (~80 Hz), and normalize loudness consistently.
+  - Keep utterances short with brief pauses; long, breathy segments reduce accuracy and latency.
+  - For code‑mixed Tamil/English, don’t force language; allow auto‑detect to avoid misclassification.
+  - Increase search quality: raise beam size (e.g., 5–10) and enable VAD filtering for cleaner segments if latency is acceptable.
+  - If available, run with GPU (CT2 float16) for faster, higher‑quality decoding; CPU int8 is slower and may underperform on difficult audio.
+
 ## Project Structure
 
 ```
@@ -191,3 +204,11 @@ This project was developed as an assignment for Word Works AI India Pvt Ltd. All
 - Google Gemini for natural language processing
 - Microsoft Edge TTS for high-quality speech synthesis
 - WebRTC VAD for voice activity detection
+
+## Notes and acknowledgments
+
+- Models hosting: Due to a technical limitation when pushing large binaries to the repository (Git LFS and network constraints), I could not include the `models/` directory directly in this repo. As a workaround, the models are provided via Google Drive. Sorry for the inconvenience, and thank you for your understanding.
+
+- Performance caveat: Part of the observed lower accuracy and latency is influenced by the hardware used during development (CPU-only and modest system specs). Results should improve with stronger hardware (especially a CUDA-capable GPU) and the larger model sizes.
+
+- UI focus: I prioritized building a reliable speech→LLM→TTS pipeline over UI polish. The web UI is intentionally simple; it can be redesigned and enhanced once the core pipeline is finalized.
