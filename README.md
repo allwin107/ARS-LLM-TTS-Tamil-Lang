@@ -39,16 +39,20 @@ python -m venv .venv
 pip install gradio av edge-tts google-generativeai python-dotenv numpy huggingface_hub
 ```
 
-4. Download and extract the models:
-```bash
-# Download models.zip from: [Add your preferred hosting link here]
-# Then extract it:
-Expand-Archive -Path models.zip -DestinationPath . -Force  # For Windows PowerShell
-# OR
-unzip models.zip  # For Linux/Mac
-```
+4. Models Setup:
 
-Note: Due to file size limitations, the models.zip file is hosted externally. You can also download individual models using the Hugging Face Hub as described in the Model Management section.
+The Faster-Whisper models can be obtained in two ways:
+- **Automatic Download**: The models will be downloaded automatically when you first run the application.
+- **Manual Download**: 
+  ```bash
+  # Download models.zip from: [Add your preferred hosting link here]
+  # Then extract it:
+  Expand-Archive -Path models.zip -DestinationPath . -Force  # For Windows PowerShell
+  # OR
+  unzip models.zip  # For Linux/Mac
+  ```
+
+Note: Models are downloaded from the Hugging Face Hub. The first run might take some time depending on your internet connection and the model size chosen.
 
 5. Set up environment variables:
 Create a `.env` file in the project root with the following variables:
@@ -83,14 +87,14 @@ The web interface provides an intuitive way to interact with the system, featuri
 The system uses several AI models that can be managed through the web interface:
 
 ### ASR Models
-The repository includes pre-downloaded Faster-Whisper models in the `models/faster-whisper` directory. You'll have access to all model sizes without needing to download them separately.
+The application uses Faster-Whisper models which will be downloaded automatically when first used, or you can download them manually using the provided models.zip file. Once downloaded, the models will be stored in the `models/faster-whisper` directory.
 
 In the web UI Live tab you can:
 - **Preload Selected**: Use a specific Faster-Whisper model size (tiny/base/small/medium/large-v2)
 - **Preload All**: Load all supported model sizes at once
 - **Load ASR**: Switch between models instantly
 
-Models are located in `./models/faster-whisper/<size>`. The system will use these local files instead of downloading them again.
+Models will be stored in `./models/faster-whisper/<size>`. After the initial download, the system will use these local files for subsequent runs.
 
 ### Model Selection Guide
 
