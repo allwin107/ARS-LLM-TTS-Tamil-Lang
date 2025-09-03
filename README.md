@@ -157,14 +157,14 @@ The web interface provides an intuitive way to interact with the system, featuri
 The system uses several AI models that can be managed through the web interface:
 
 ### ASR Models
-The application uses Faster-Whisper models which will be downloaded automatically when first used, or you can download them manually using the provided models.zip file. Once downloaded, the models will be stored in the `models/faster-whisper` directory.
+The application uses Faster-Whisper models which will be downloaded automatically when first used, or you can download them manually using the provided drive link. Once downloaded, place the models in the `models/faster-whisper` directory.
 
 In the web UI Live tab you can:
 - **Preload Selected**: Use a specific Faster-Whisper model size (tiny/base/small/medium/large-v2)
 - **Preload All**: Load all supported model sizes at once
 - **Load ASR**: Switch between models instantly
 
-Models will be stored in `./models/faster-whisper/<size>`. After the initial download, the system will use these local files for subsequent runs.
+Models will be stored in `./models/faster-whisper/`. After the initial download, the system will use these local files for subsequent runs.
 
 ### Model Selection Guide
 
